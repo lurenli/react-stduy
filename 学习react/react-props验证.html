@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>菜鸟教程 React 实例</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+	  <div id="example"></div>
+    <!-- Props 验证使用 propTypes，它可以保证我们的应用组件被正确使用，React.PropTypes 提供很多验证器 (validator) 来验证传入数据是否有效。当向 props 传入无效数据时，JavaScript 控制台会抛出警告。
+    React.PropTypes.string.isRequire检测 是否为字符串,数据类型和空不能显示  对象报错not defined  function报语法错误
+    出于性能原因，仅在开发模式下检查propTypes
+     -->
+    <script type="text/babel">
+    //var title = "菜鸟教程";
+      var title = 123;
+    var MyTitle = React.createClass({
+      propTypes: {
+        title: React.PropTypes.string.isRequired,
+      },
+
+      render: function() {
+         return <h1> {this.props.title} </h1>;
+       }
+    });
+    ReactDOM.render(
+        <MyTitle title={title} />,
+        document.getElementById('example')
+    );
+    </script>
+  </body>
+</html>

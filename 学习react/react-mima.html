@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">  
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+  <script type="text/babel">
+    var HeadComponent = React.createClass({ 
+        getInitialState:function(){
+         console.log("getInitialState")
+           return{
+              type:"text",
+              txt:"明文"
+         }
+        },
+        componentWillReceiveProps:function(nextProp,newState) {
+            console.log('1.child componentWillReceiveProps')
+        },
+        shouldComponentUpdate:function(nextProp, newState) {
+        //这是一个疑问句
+              console.log('2.child shouldComponentUpdate')
+              return true;
+        },
+        componentWillUpdate:function(nextProp, nextState) {
+              console.log('3.child componentWillUpdate');
+        },
+        componentWillUnmount:function(nextProp, nextState) {
+              console.log('4.child componentWillUnmount');
+        },
+        handClick:function(){
+            if(this.state.type=='text'){
+              this.setState({
+                type:"password",
+                txt:"密文"
+             })
+           }else{
+                this.setState({
+                  type:"text",
+                  txt:"明文"
+             })
+           }
+        },
+        render:function(){
+          console.log('render')
+           return(
+              <div>
+                <h1>react.mima</h1>
+                <input type={this.state.type} />
+                <button onClick={this.handClick}>{this.state.txt}</button>
+              </div>
+            )
+        }
+      })
+ 	ReactDOM.render(<HeadComponent/>,document.getElementById('example'))
+  </script>
+
+</body>
+</html>

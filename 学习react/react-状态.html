@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>菜鸟教程 React 实例</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+  <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+  <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <!-- getInitialState定义初始状态,也就是一个对象,这个对象可以通过 this.state 属性读取
+         this.setState 方法修改状态值
+         this.state 就是return 返回来的状态值
+     -->
+    <script type="text/babel">
+      var LikeButton = React.createClass({
+        getInitialState: function() {
+          return { liked: false};
+        },
+        handleClick: function(event) {
+          console.log(this.state)
+          this.setState({liked: !this.state.liked});
+        },
+        render: function() {
+          var text = this.state.liked ? '喜欢' : '不喜欢';
+          return (
+            <p onClick={this.handleClick}>
+              你<b>{text}</b>我。点我切换状态。
+            </p>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <LikeButton />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>

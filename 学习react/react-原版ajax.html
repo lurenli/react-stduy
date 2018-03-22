@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">  
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+   <!--  async:true,(默认)，异步方式，$.Ajax执行后，会继续执行ajax后面的脚本，直到服务器端返回数据后，触发$.Ajax里的success方法，这时候执行的是两个线程。
+    async:false，同步方式 -->
+    <script type="text/babel">
+      var $ = (function(){
+        var ajax = function(url,callback){
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET",url,true);
+          xhr.send();
+          xhr.onreadystatechange=function(){
+            if(xhr.readyState == 4 && xhr.status == 200){
+              callback(JSON.parse(xhr.responseText))
+          }
+       }
+      }
+      return{
+          http:ajax
+     }
+     })();
+      var Listview = React.createClass({ 
+      getDefaultProps:function(){
+          return{
+          url:'http://localhost:3000/posts'
+        }   
+      },
+      getInitialState:function(){
+        return{
+           result:''
+        }
+      },
+      componentWillMount:function(){
+           var _this = this;
+           $.http(this.props.url,function(data){
+             _this.setState({
+             result:data
+           })
+         })
+      },
+        render:function (){
+          var jsx=[];
+          var _result = this.state.result;  
+          if(_result){
+           var _reslth = _result.length;
+           for(var i=0;i<_reslth;i++){
+             jsx.push( 
+                <Content id={_result[i].id} name={_result[i].name} key={i}/>
+              )
+         }
+         }
+          return(
+            <div>
+             {jsx}
+            </div>
+          )
+      }
+      })
+      var Content = React.createClass({
+        render:function(){
+          return(
+            <div>
+              <h1>{this.props.id}</h1>
+              <h1>{this.props.name}</h1>
+            </div>
+          )
+      }
+    })
+   ReactDOM.render(<Listview/>,document.getElementById('example'))
+</script>
+</body>
+</html>

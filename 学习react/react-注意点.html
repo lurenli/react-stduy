@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">  
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="js/style.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+   <!--<script type="text/babel"> 普通写法
+      ReactDOM.render(
+        <h1>Hello, world!</h1>,
+        document.getElementById('example')
+      );
+    </script>-->
+    <!--创建组件写法 
+       写法注意点： 
+    	1.有且只有一个根节点 
+    	2.标签成对处理
+    	3.组件首字母大写，否则当标签处理 
+    	4.其他注释格式不能写在里面 会报错
+    	5.注释格式:{/* */} 或者变态写法/* commit it */写在div里面
+       样式注意点：
+    	6.样式可以用id选择器，不能用class选择器,因为class是关键字，要用className
+    	7.样式内部定义,其实是一个js的变量,设置的通常是一个object对象,需要驼峰式写法
+    	例如:var style={color:'red',background:"blue"}  <div style={style}>1212</div>
+    	8.外部引用样式对象,js格式文件,引入的时候像引入js一样,使用的时候,对象.属性
+    	9.内部写法,{{}},例如:{{color:"red"}}
+    	10.采用对象原型链进行样式控制，注意this问题,注意先定义类,再写原型
+    		例如：A.prototype.css={
+   				h1:{color:'blue'}
+			}
+		    二号位子:var _a = this.css
+            标签里面:_a.对象
+       事件注意点：
+        通常采用第二种写法
+        11.事件通常驼峰式写法,可以调用参数event,打印出来是空,但是使用的时候就有,用什么调什么,
+           增加了react性能度
+        12.Touch触摸事件,移动端才会触发,移动端需要meta(自适应)标签,移动端事件高于pc端
+           react默认已经支持了移动端的响应事件
+        13.外部定义一个js格式文件,引入的时候像引入js一样,使用的时候,对象.属性
+          例如:<button onClick={对象.事件名}>
+        14.事件原型链,
+           例如: A.prototype.JS={
+   			ChangeText:function(event){
+	         console.log(event)
+   			}
+		   }
+		   二号位子:var _b = this.Js
+           标签里面:_b.对象
+    --> 
+  <script type="text/babel">
+     var A = React.createClass({ 
+        handClick:function(){
+          alert('点击事件')
+        },
+        handTouch:function(){
+          alert('手机端触摸事件')
+        },
+	     render:function(){
+	        var _a = this.css;
+	        var styles;
+	        var s=1900;
+	        if(s>1000){
+	         styles={background:"red",color:"blue"}
+	        }else{
+	         styles={color:"green"}
+	        }
+		    return(
+		        <div style={styles}> 
+		        	rgrehrehrtnj
+		            <h1 style={style.h1}>hello</h1>
+		            <p style={style.p}>112454</p>
+		            <button onClick={this.handClick}>点击事件</button>
+		            <button onTouchEnd={this.handTouch}>触摸事件</button>
+		        </div>
+		    )
+	    }
+})
+ ReactDOM.render(<A/>,document.getElementById('example'))
+  </script>
+
+</body>
+</html>

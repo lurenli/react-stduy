@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">  
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <!--
+      document.getElementsByTagName()
+      document.getElementById()
+      document.getElementsByClassName()
+     -->
+  <script type="text/babel">
+    var ParentCompont = React.createClass({
+        getDefaultProps:function() {
+          console.log('1.parent getDefaultProps')
+          return{
+           myprops:""
+         }
+        },
+        getInitialState:function() {
+         console.log('2.parent getInitialState')
+          return{
+            result:"react-子组件"
+          }
+        },
+         handChange:function(event){
+         var _v =  event.target.value;
+         this.setState({
+           result:_v
+        })
+       },
+       onChildChanged:function(newState){
+          this.setState({
+           result:newState
+        }) 
+       },
+        componentWillMount:function () {
+          console.log('3.parent ajax请求 componentWillMount')
+        },
+        componentDidMount:function () {
+            console.log('5.parent第三方框架进行整合操作 componentDidMount')
+            document.getElementsByTagName('input')[0].style.color='red'
+        },
+       render:function(){
+         console.log('4.parent render渲染工作')
+            return(
+               <div> 
+                 <h1>父组件</h1>
+                 {this.state.result}
+                 <br/>
+                 <input type="text" onChange={this.handChange}/>
+                 <Childponment name={this.state.result}/>
+               </div>
+          )
+       }
+      })
+      var Childponment = React.createClass({
+       componentWillReceiveProps:function(nextProp,newState) {
+            console.log('1.child componentWillReceiveProps')
+        },
+        shouldComponentUpdate:function(nextProp, newState) {
+        //这是一个疑问句
+              console.log('2.child shouldComponentUpdate')
+              console.log(nextProp.name)
+              if(nextProp.name==='vane'){
+               return true;
+             }else{
+                return false;
+            }
+        },
+        componentWillUpdate:function(nextProp, nextState) {
+              console.log('3.child componentWillUpdate');
+        },
+        componentDidUpdate:function(nextProp, prevState) {
+              console.log('5.child componentDidUpdate')
+        },
+        handChange:function(event){
+         var _v =  event.target.value;
+         this.props.callbackParent(_v)
+        },
+        render:function(){
+        console.log('4.child 子组件render')
+           return(
+             <div>
+               <h1>子组件</h1>
+               <input type="text" onChange={this.handChange}/>
+               <br/>
+               {this.props.name}
+             </div>
+           )
+        }
+      })
+ 	ReactDOM.render(<ParentCompont/>,document.getElementById('example'))
+  </script>
+
+</body>
+</html>

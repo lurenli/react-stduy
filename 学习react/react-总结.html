@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">  
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <!--
+ ReactDOM.unmountComponentAtNode(document.getElementById('content'));卸载(不写也可以)
+ ReactDOM.render(<HeadComponent/>,document.getElementById('content'))重载
+
+-->
+  <script type="text/babel">
+    var HeadComponent = React.createClass({ 
+      render:function (){
+        return(
+          <div>
+            <h1>头部</h1>
+          </div>
+        )
+    }
+    })
+    var ContentComponent = React.createClass({ 
+      render:function (){
+        return(
+          <div>
+            <h1>内容</h1>
+          </div>
+        )
+    }
+    })
+     var FooterComponent = React.createClass({ 
+       Handclick:function(event){
+         var _title = event.target.title
+         switch(_title){
+         case "header":
+         ReactDOM.unmountComponentAtNode(document.getElementById('content'));
+         ReactDOM.render(<HeadComponent/>,document.getElementById('content'))
+         break;
+         case "content":
+         ReactDOM.unmountComponentAtNode(document.getElementById('content'));
+         ReactDOM.render(<ContentComponent/>,document.getElementById('content'))
+         break;
+         case "footer":
+         ReactDOM.unmountComponentAtNode(document.getElementById('content'));
+         ReactDOM.render(<FooterComponent/>,document.getElementById('content'))
+         break;
+       }
+      }, 
+      render:function (){
+        return(
+          <div>
+            <span onClick={this.Handclick} title="header">首页</span>
+            <span onClick={this.Handclick} title="content">分页</span>
+            <span onClick={this.Handclick} title="footer">我的</span>
+          </div>
+        )
+    }
+    })
+    var BoxComponent = React.createClass({ 
+      render:function (){
+        return(
+          <div>
+            <HeadComponent/>
+            <div id="content"/>
+            <FooterComponent/>
+          </div>
+        )
+    }
+  })
+   ReactDOM.render(<BoxComponent/>,document.getElementById('example'))
+   ReactDOM.render(<ContentComponent/>,document.getElementById('content'))
+   setTimeout(function(){
+        var flag =  ReactDOM.unmountComponentAtNode(document.getElementById('content'));
+        console.log(flag)
+   },1000)
+  </script>
+
+</body>
+</html>

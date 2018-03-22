@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">  
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="js/style.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <!-- 
+        name 属性通过 this.props.name 来获取。 
+  		getDefaultProps 设置默认值
+  		父组件设置state   并通过在子组件上使用 props 将其传递到子组件上
+  		在 render中, 我们设置 name 和 site 来获取父组件传递过来的数据。
+    -->
+  <script type="text/babel">
+    var HeadComponent = React.createClass({ 
+	    getDefaultProps: function() {
+	        return {
+	          name: 'getDefaultProps设置的默认值'
+	        };
+	    },
+	    render:function(){
+		    var arr=[];
+		    for(var i=0;i<5;i++){
+		     arr.push(<ListComponent/>)
+		    }
+	        return(
+	          <div>
+	          	{this.props.name}
+                <h1>HeadComponent</h1>
+                {arr}
+	          </div>
+	        )
+	     } 
+    })
+    var ListComponent = React.createClass({ 
+	    render:function(){
+	    
+	        return(
+	          <div>
+	          	{this.props.name}
+                <h1>ListComponent</h1>
+	          </div>
+	        )
+	     } 
+    })
+    var FootComponent = React.createClass({ 
+	    render:function(){
+	        return(
+	          <div>
+	          	{this.props.name}
+                <h1>FootComponent</h1>
+	          </div>
+	        )
+	     } 
+    })
+    var LinkComponent = React.createClass({ 
+	    render:function(){
+	        return(
+	          <div>
+               <a href={this.props.site}>{this.props.site}</a>
+	          </div>
+	        )
+	     } 
+    })
+    var Cxt = React.createClass({
+     	getInitialState: function() {
+    		return {
+      			names: "菜鸟教程",
+     	 		site: "http://www.runoob.com"
+    		};
+  		},
+	    render:function(){
+	        return(
+	          <div>
+                <HeadComponent/>
+                <ListComponent name={this.state.names} />
+                <FootComponent name={this.state.names} />
+                <LinkComponent site={this.state.site} />
+	          </div>
+	        )
+	     } 
+    })
+ 	ReactDOM.render(<Cxt/>,document.getElementById('example'))
+  </script>
+
+</body>
+</html>

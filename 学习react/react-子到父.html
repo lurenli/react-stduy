@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">  
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+  <script type="text/babel">
+    var HeadComponent = React.createClass({ 
+       getInitialState:function(){
+           return{
+              result:''
+         }
+        },
+        handChange:function(ev){
+          var _v=ev.target.value
+          console.log(ev.target.value)
+          this.setState({
+            result:_v
+          })
+        },
+        onChildChanged:function(newState){
+          this.setState({
+            result:newState
+          })
+        },
+        render:function(){
+           return(
+              <div>
+                 <h1>父组件</h1>
+                 {this.state.result}
+                 <Child callbackParent={this.onChildChanged}/>
+              </div>
+            )
+        }
+      })
+      var Child = React.createClass({ 
+        handChange:function(ev){
+          var _v=ev.target.value
+          console.log(this.props.callbackParent)
+          this.props.callbackParent(_v)
+        },
+        render:function(){
+           return(
+              <div>
+                <h1>子组件</h1>
+                {this.props.name}
+                <input type="text" onChange={this.handChange} />
+              </div>
+            )
+        }
+      })
+ 	ReactDOM.render(<HeadComponent/>,document.getElementById('example'))
+  </script>
+
+</body>
+</html>
